@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>С днём рождения, Иля!</title>
+  <style>
+    :root {
+      --bg-color: #fdfbf7;
+      --accent-color: #ff6b6b;
+      --text-color: #2d3436;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--accent-color);
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      color: #636e72;
+    }
+
+    .message-box {
+      display: none;
+      background: #f1f2f6;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .message-box.visible {
+      display: block;
+    }
+
+    .message-box img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 14px;
+    }
+
+    .counter {
+      font-size: 0.9rem;
+      color: #b2bec3;
+      margin-bottom: 16px;
+    }
+
+    button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    button:hover {
+      background: #ee5253;
+      transform: scale(1.03);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎉 С днём рождения, Иля!</h1>
+    <p class="subtitle">У меня для тебя целых три сюрприза</p>
+
+    <div id="message" class="message-box">
+      <!-- сюда JS вставляет текст и фото -->
+    </div>
+
+    <div class="counter" id="counter"></div>
+
+    <button onclick="nextSurprise()" id="btn">Открыть первое пожелание</button>
+  </div>
+
+  <script>
+    // НАСТРОЙ ПОД СЕБЯ: тексты и названия файлов фотографий
+    const surprises = [
+      {
+        text: "Иля, с днём рождения! Ты из тех людей, рядом с которыми даже обычный день становится ярче. Пусть всё задуманное потихоньку сбывается 💛",
+        photo: "photo1.jpg"
+      },
+      {
+        text: "Желаю, чтобы этот год был полон приключений, вкусняшек и поводов гордиться собой. Ты правда круче всех! 🎂",
+        photo: "photo2.jpg"
+      },
+      {
+        text: "И последнее: спасибо, что ты есть. Мне очень повезло, что мы дружим. С любовью, Паша и Фарух! 🥳",
+        photo: "photo3.jpg"
+      }
+    ];
+
+    let current = -1; // какое поздравление показываем (-1 = ещё ничего не открыто)
+
+    function nextSurprise() {
+      const box = document.getElementById('message');
+      const counter = document.getElementById('counter');
+      const btn = document.getElementById('btn');
+
+      current = current + 1;
+
+      if (current >= surprises.length) {
+        // всё показано — начинаем заново
+        current = 0;
+        btn.textContent = "Начать сначала";
+      }
+
+      const item = surprises[current];
+
+      box.innerHTML = "<p>" + item.text + "</p>" +
+                      '<img src="' + item.photo + '" alt="Наше фото">';
+      box.classList.add('visible');
+
+      counter.textContent = "Сюрприз " + (current + 1) + " из " + surprises.length;
+
+      // меняем надпись на кнопке
+      if (current < surprises.length - 1) {
+        btn.textContent = "Открыть следующее пожелание";
+      } else {
+        btn.textContent = "Прочитать ещё раз";
+      }
+    }
+  </script>
+</body>
+</html>
